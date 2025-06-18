@@ -1,0 +1,24 @@
+{
+  "name": "portale-studenti",
+  "version": "1.0.0",
+  "description": "Portale per l'assegnazione e la fruizione di corsi (video e link esterni) per studenti, con pannello amministratore.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "studenti",
+    "corsi",
+    "learning",
+    "admin",
+    "dashboard"
+  ],
+  "author": "Il tuo nome/organizzazione",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "firebase-admin": "^13.4.0",
+    "uuid": "^9.0.1"
+  }
+}

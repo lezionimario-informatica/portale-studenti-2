@@ -1,0 +1,21 @@
+# Salva questo file come .gitignore nella cartella principale del tuo progetto
+
+# Node modules
+node_modules/
+
+# File di dati locale (non versionare i dati temporanei)
+data.json
+
+# Chiave di servizio Firebase (MOLTO IMPORTANTE: NON DEVE ESSERE NEL REPOSITORY PUBBLICO!)
+serviceAccountKey.json
+
+# File di log di npm
+npm-debug.log
+*.log
+
+# macOS
+.DS_Store
+
+# File di configurazione generati da vari editor o IDE
+.vscode/
+.idea/

@@ -1,0 +1,246 @@
+<!-- Salva questo codice come login.html nella cartella 'public' -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portale Studenti</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Stili specifici per la pagina di login */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            font-family: 'Inter', sans-serif; /* Assicurati che il font sia applicato */
+        }
+
+        .login-container {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+            .login-container h2 {
+                color: var(--primary-color);
+                margin-bottom: 30px;
+                font-size: 2rem;
+            }
+
+            .login-container label {
+                display: block;
+                text-align: left;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: var(--text-color);
+            }
+
+            .login-container input[type="text"],
+            .login-container input[type="password"],
+            .login-container input[type="email"] { /* Aggiunto anche email */
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 20px;
+                border: 1px solid var(--border-color);
+                border-radius: 6px;
+                font-size: 1rem;
+            }
+
+                .login-container input[type="text"]:focus,
+                .login-container input[type="password"]:focus,
+                .login-container input[type="email"]:focus {
+                    outline: none;
+                    border-color: var(--primary-color);
+                    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+                }
+
+            .login-container button {
+                width: 100%;
+                padding: 12px;
+                background-color: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+                .login-container button:hover {
+                    background-color: #43a047;
+                    transform: translateY(-2px);
+                }
+
+        .login-message {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: red;
+        }
+
+            .login-message.success {
+                color: green;
+            }
+
+        .register-link {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+        }
+
+            .register-link a {
+                color: var(--secondary-color);
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .register-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .small-text {
+            font-size: 0.8rem;
+            color: var(--light-text-color);
+            margin-bottom: 15px;
+        }
+
+        /* Stili per il modal */
+        .modal {
+            display: none; /* Nascosto di default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+            .close-button:hover,
+            .close-button:focus {
+                color: #333;
+                text-decoration: none;
+            }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-content button[type="submit"] {
+            margin-top: 10px;
+        }
+
+        #custom-alert-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+            #custom-alert-buttons button {
+                width: auto; /* Sovrascrivi width: 100% per i bottoni del modal */
+                padding: 10px 20px;
+            }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Accedi al Portale</h2>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="login-message" class="login-message"></p>
+        <p class="register-link">
+            Sei un nuovo studente e non hai un account? <a href="#" id="show-register">Registrati qui</a>
+        </p>
+
+        <div id="register-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3>Registrazione Studente</h3>
+                <form id="register-form">
+                    <label for="reg-username">Username:</label>
+                    <input type="text" id="reg-username" name="username" required>
+                    <label for="reg-password">Password:</label>
+                    <input type="password" id="reg-password" name="password" required>
+                    <label for="student-email-register">Email Studente (esistente nel DB):</label>
+                    <input type="email" id="student-email-register" required>
+                    <p class="small-text">Assicurati che l'email dello studente esista già nella sezione "Studenti" del pannello amministratore, poiché verrà collegata al tuo account utente.</p>
+                    <button type="submit">Registra Account</button>
+                </form>
+                <p id="register-message" class="login-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Message/Confirmation Modal -->
+    <div id="custom-alert-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="custom-alert-title"></h3>
+            <p id="custom-alert-message"></p>
+            <div id="custom-alert-buttons">
+                <button id="custom-alert-ok-btn" class="add-new-btn" style="background-color: var(--primary-color);">OK</button>
+                <button id="custom-alert-cancel-btn" class="add-new-btn" style="background-color: var(--button-delete); display: none;">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="login_script.js"></script>
+</body>
+</html>
